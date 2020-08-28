@@ -22,3 +22,5 @@
 
       1. 데이터 다운로드를 자유롭게 진행할 수 없음
          1. Google Drive 차단, python SSL Error 문제 etc
+3. 신규 멤버
+   1. 권순규 사원 (뚠뚠)
