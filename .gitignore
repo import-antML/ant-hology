@@ -1,4 +1,6 @@
 # 순규
+ksk/LOL/data/*.*
+ksk/LOL/.env
 
 # 주현
 김주현/datasets/match_data/*
