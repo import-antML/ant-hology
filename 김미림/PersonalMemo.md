@@ -10,3 +10,7 @@ PersonalMemo.md
 [2회차 - 2020.09.09]
  - plotly 실습
  - git 이용해 github에 업로드
+ 
+[3회차 - 2020.10.20]
+ - plotly 실습
+ - git 이용해 github에 업로드
