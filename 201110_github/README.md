@@ -15,3 +15,6 @@
 
 ### Github와 Slack 연동
 - https://uang.tistory.com/13?category=799977
+
+### Github Cherrypick
+- https://medium.com/react-native-seoul/git-cherry-pick-%EC%82%AC%EC%9A%A9%EB%B2%95-fe1a3346bd27
