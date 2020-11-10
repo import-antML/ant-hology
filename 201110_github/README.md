@@ -1,5 +1,7 @@
 ## Github 활용법 모음
 
+### Git 기본부터 pull request까지(reviewer 지정)
+- https://wordbe.tistory.com/entry/Git-%EC%82%AC%EC%9A%A9-%EB%B0%A9%EB%B2%95-%EC%A0%95%EB%A6%ACcommit-push-pull-request-merge-%EB%93%B1
 
 ### Github Commit, Branch, Merge
 - https://uang.tistory.com/9?category=799977
@@ -16,5 +18,8 @@
 ### Github와 Slack 연동
 - https://uang.tistory.com/13?category=799977
 
-### Github Cherrypick
+### Github Cherry-pick
 - https://medium.com/react-native-seoul/git-cherry-pick-%EC%82%AC%EC%9A%A9%EB%B2%95-fe1a3346bd27
+
+### Github Merge / Squash & merge / Rebase & merge
+- https://im-developer.tistory.com/182
