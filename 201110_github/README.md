@@ -19,5 +19,5 @@
 ### Github Cherrypick
 - https://medium.com/react-native-seoul/git-cherry-pick-%EC%82%AC%EC%9A%A9%EB%B2%95-fe1a3346bd27
 
-### Github Merge / Squash & merge / rebase / merge
+### Github Merge / Squash & merge / rebase & merge
 - https://im-developer.tistory.com/182
