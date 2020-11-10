@@ -1,0 +1,157 @@
+
+[기초 다지기]
+#-----------------------------------------------------------------------------#
+1. git 설치
+
+2. 작업공간 폴더 생성
+
+3. 제어판 설정
+제어판-사용자계정-자격증명관리자-일반자격증명편집
+https://github.com/
+milim203
+rw2*
+
+4. 
+해당 폴더 우클릭 후, [Git Bash Here] 클릭
+git config --global user.email "kmj45472510@gmail.com"
+git config --global user.name "milim203"
+
+git init (이거 중요함...!git repository 사용하기 위해서는 꼭 필요)
+
+git clone https://github.com/import-antML/ant-hology.git
+
+5.  해당 하위 폴더에 새로운 파일들 업로드 후 아래 실행
+git status    : 파일 목록 확인
+git add .     : stages new file and modifications, without deletions (https://keepdev.tistory.com/19 참조)
+git commit -m "<설명 추가>"
+git remote add origin https://github.com/import-antML/ant-hology.git   : 원격 저장소 추가
+git remote -v                                                                          : 원격 저장소 목록 확인
+git push -u origin master                                                            : (로컬 -> 원격) 
+==> git push -f origin master
+
+#-----------------------------------------------------------------------------#
+
+
+[심화]
+#-----------------------------------------------------------------------------#
+#####################################################
+1. Github Commit, Branch, Merge
+2. Github pull request, push, pull
+3. Github에서 Issue 등록하고 pull request하여 issue 해결하기, Project
+#####################################################
+Contributor - Pull/Push 권한 X, Clone하여 로컬에 저장 가능, 
+               - 코드 수정/추가를 해서 다시 자기 원격저장소에 push
+               - push가 완려되면 프로젝트 저장소에 pull request를 보냄
+               - pull request를 받은 프로젝트 관리자는 그것을 검토하고 merge or reject하여 마루짐
+Collaborator : 프로젝트 공동 책임자
+
+
+
+1. Commit, Branch, Merge
+(1) Branch 
+ - 독립적으로 작업을 진행하기 위한 개념으로 
+   각각의 브랜치는 다른 브랜치의 영향을 받지 않기 때문에 여러 작업을 동시에 진행할 수 있음
+ - 'checkout'명령어를 실행하여 원하는 브랜치로 이동
+ - https://backlog.com/git-tutorial/kr/stepup/stepup1_3.html
+ - 'merge' 여러개
+ - 'rebase' 이력은 단순해지지만 원래의 커밋 이력이 변경됨
+git branch <branchname>: 브랜치 생성
+git branch                    : 브랜치 목록 확인(*이 붙어있는 것이 현재 선택된 브랜치)
+git checkout <branchname> : 브랜치를 checkout(이동)
+git add <filename>
+git commit -m "<설명추가>"
+git remote add origin https://github.com/import-antML/ant-hology.git   : 원격 저장소 추가
+git remote -v   
+git push origin <branchname> : 브랜치의 수정내역을 origin으로 푸시
+git pull <remote name>  : 코드 동기화
+
+(병합)
+git checkout master        : 현재 사용중인 브랜치를 'master'로 전환
+git merge <commit, branchname> : (파일이 일단은 변경되지 않은 상태여야함) 'master'브랜치가 가리키는 커밋이 해당 브랜치와 같은 위치로 이동
+(삭제)
+git branch -d <branchname>
+git branch                         : 브랜치 확인
+(충돌해결)
+ - 충돌이 일어난 부분은 일일이 확인해서 수정해주어야 함
+git add <filename>
+git commit -m "<설명추가>"
+(rebase로 병합)
+ - rebase를 먼저 실행한 후 병합하며 그 이력을 하나의 줄기로 만들 수 있음
+git reset --hard HEAD~
+git checkout <branchname>
+git rebase master : branch로 전환하여 'master' 브랜치에 rebase 실행
+ - 충돌 부분을 수정한 후 
+git add <filename>
+git rebase --continue
+
+
+2. Pull, Push
+(1) Pull Request
+- 권한은 없으나 기여하고 싶은 프로젝트가 있다면 clone 이전에 먼저 해당 프로젝트를 "fork"해오는 작업 필요(fork버튼 클릭)
+- fork는 다른 사람의 저장소를 가져와 내 저장소를 만드는 기능
+- fork된 레포지토리를 로컬에 "clone"하여 작업
+git clone https://github.com/milim203/ant-hology.git
+ls
+git status
+git add .
+git commit -m "upload file"
+git push origin master
+- 개인 저장소에서 작업한 후 이 작업을 원본 레포지토리에 반영해달라고 요청 이 과정이 "Pull request"
+- Github UI를 통해 쉽게 할 수 있음, 커밋을 올린 자신의 forked 레파지토리의 메인 화면을 보면 
+  clone을 위한 Github URL을 얻었던 버튼 왼쪽에 "New Pull request"라는 버튼이 있음
+  잘못된 건 없는지 확인한 후 "Create Pull Request"버튼 클릭 원본 레포지토리 관리자에게 알림이 간다
+  관리자는 이를 확인하고 수락하여 해당 커밋을 웝노 레포지토리에 merge하거나 거절할 수 있음
+
+(2) Pull
+ - Pull : 원격 저장소의 내용을 가져와 자동으로 병합 작업
+ - Fetch : 단순히 원격 저장소의 내용을 확인만 하고 로컬 데이터와 병합하고 싶지 X
+             원격 저장소의 최신 이력을 확인할 수 있음. 
+git fetch : 원격저장소의 변경사항(commit)들을 로컬저장소로 가져옴, 아무 변화가 없어보이지만 아래 코드 실행해서 확인
+gir branch -a : 원격 저장소의 임의의 브랜치(origin/master)가 생성됨을 확인
+git merge origin/master : 원격저장소의 변경내역과 병합(변경내역에 충돌이 있다면, 아래 코드 실행)
+git diff : 충돌이 난 부분 확인
+git pull   : 원격저장소의 변경사항을 가져와 로컬에 병합 (git fetch + git merge)
+
+3. Issue 등록하고 Pull request로 해결하기
+
+
+
+
+
+[Others]
+#-----------------------------------------------------------------------------#
+git config --list
+
+git remote remove origin
+
+git rm -rf data // 모두 삭제
+git rm -r --cached {파일 및 폴더명} // 원격 저장소에 있는것만 삭제
+git commit -m "remove file"
+git push -u origin master
+
+
+cd C:\Users\80575\Desktop\2020.08.27 분석 학습활동\github_workspace\
+git config core.bare true
+git config --path core.worktree C:/Users/80575/Desktop/2020.08.27 분석 학습활동/1. data
+
+git config core.sparseCheckout true
+git remote add origin https://github.com/milim203/ant-hology.git
+git remote add origin https://github.com/milim203/test.git
+
+git clone https://github.com/milim203/test.git
+git push origin https://github.com/milim203/test.git master master/1.data
+
+git pull origin master --allow-unrelated-histories
+
+
+C:/Users/80575/Desktop/2020.09.09 github_test/test/test/dataset_test
+
+주피터 노트북 파일이 올려져 있는 깃허브 사이트의 url 다음과 같을 때
+https://github.com/qbxlvnf11/machine-learning/blob/master/Character-level_Word-level_t-SNE.ipynb
+
+ --> 다음과 같은 url에 들어가면 해당 주피터 노트북 파일을 볼 수 있습니다.
+      https://nbviewer.jupyter.org/github/qbxlvnf11/machine-learning/blob/master/Character-level_Word-level_t-SNE.ipynb
+
+
+
+############################################################################
