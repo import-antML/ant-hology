@@ -23,3 +23,7 @@
 
 ### Github Merge / Squash & merge / Rebase & merge
 - https://im-developer.tistory.com/182
+
+### Github 리셋 방법?
+
+### Github와 bitbucket의 차이?
