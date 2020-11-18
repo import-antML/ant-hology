@@ -15,29 +15,29 @@
          2. `git reset`: staging한 것 까지 되돌리기
          3. `git reset --hard` : working dir 까지 다 날려버림
          4. `git reset HEAD xxx.txt` : 해당 파일 add한 것을 취소하겠음.
-            1. `git checkout -- xxx.txt` : 해당 파일 수정 add한것을 취소하겠음.
       5. `git commit ` : 버전 업데이트 하기
          1. `git commit -m '커밋할 내용'`
          2. `git commit --amend` : 방금 전 커밋한 것의 메세지를 바꿔 덮어 쓰겠다.
             1. 아 맞다 이거도 커밋해야함. 이라는 메시지를 남기지 않기 위함
       6. `.gitignore 파일` : 해당 파일에 git에 어떠한 영향을 받지 않는 파일 목록을 기록
          1. 보통 Dataset이나 로컬 설정, 보안이 필요한 파일 등을 표시한다.
-
-   2. Git 원격 저장소
-
-      1. 일반적으로는 Github, Gitlab, Bitbucket
+      
+2. Git 원격 저장소
+   
+   1. 일반적으로는 Github, Gitlab, Bitbucket
       2. 로컬에 있어도 remote라고 한다.
       3. 접속가능한 주소가 있고 해당 저장소를 remote로 등록한다면 pull push 할 수 있다.
       4. `git remote add {리모트별명지정} {주소}` : 해당 원격 저장소를 내 로컬에 등록한다.
-
-   3. 브랜치
-
-      ![브랜치](https://git-scm.com/book/en/v2/images/advance-testing.png)
-
-      1. `git branch [이름] ` : 브랜치 생성
+   
+3. 브랜치
+   
+   ![브랜치](https://git-scm.com/book/en/v2/images/advance-testing.png)
+   
+   1. `git branch [이름] ` : 브랜치 생성
          1. `git branch -d [이름]  `: 브랜치 삭제하기
       2. `git checkout` : 브랜치로 이동하기 (HEAD를 바꾸기)
          1. 브랜치를 이동하면 워킹 디렉토리가 변경됨.
+         2. `git checkout -- xxx.txt` : 해당 파일 수정 add한것을 취소하겠음.
       3. `git merge [A커밋] ` : 현재위치의 브랜치에 A커밋을 merge 시킨다. 
          1. 충돌
             1. 다른 커밋에서 같은 부분을 수정하면 conflict 발생.
@@ -84,3 +84,13 @@
          2. 로컬에 remote 추가
          3. 원하는 시점에서 branch 생성하여 거기에 자기파일 커밋하는 것만 cherry-pick
          4. git push remote branch 하기
+
+
+
+
+
+### 다음 이야기
+
+1. XAI - SHAP & LIME
+   1. 권순규 사원 LIME - 준비
+   2. 이승헌 선임 SHAP - 준비
