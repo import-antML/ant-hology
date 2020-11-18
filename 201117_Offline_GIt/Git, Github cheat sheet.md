@@ -84,13 +84,3 @@
          2. 로컬에 remote 추가
          3. 원하는 시점에서 branch 생성하여 거기에 자기파일 커밋하는 것만 cherry-pick
          4. git push remote branch 하기
-
-
-
-
-
-### 다음 이야기
-
-1. XAI - SHAP & LIME
-   1. 권순규 사원 LIME - 준비
-   2. 이승헌 선임 SHAP - 준비
