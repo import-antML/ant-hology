@@ -177,7 +177,7 @@ explain_instance의 인자
 
 ### 4-1. 분류 문제
 
-<img src="./image/explain_lime.png" width=600 height=400> <br>
+<img src="./image/explain_lime.PNG" width=600 height=400> <br>
 140번 째 데이터를 쓴 결과
 
 - Ridge Regression의 Intercept는 0.235
@@ -190,7 +190,7 @@ explain_instance의 인자
 - sepal_width의 값은 3.10
 
 
-- Random Forest가 setosa를 구분할 때 petal width와 petal length를 둘 다 사용했기 때문에, setosa vs not setosa인 경우에도 RF의 변수 중요도와 큰 차이가 없어서 Lime을 쓰는 실효성이 없지만, 실제로 복잡한 데이터를 사용할 때는 실효성이 있을 수 있다.
+Random Forest가 setosa를 구분할 때 petal width와 petal length를 둘 다 사용했기 때문에, setosa vs not setosa인 경우에도 RF의 변수 중요도와 큰 차이가 없어서 Lime을 쓰는 실효성이 없지만, 실제로 복잡한 데이터를 사용할 때는 실효성이 있을 수 있다.
 
 ### 4-2. 회귀 문제
 
@@ -213,13 +213,14 @@ LGBM 소스 코드 - https://github.com/microsoft/LightGBM/tree/master/python-pa
 따라서 각 Decision Tree 마다 / 각 Depth 마다 어떤 변수가 사용됐고, 그 때의 split gain이 얼마인 지 알 수 있다.
 
 해당 정보를 Tabular 형식으로 바꾸면 아래 그림과 같이 나오고,
-<img src="./image/lgbm_treewise.png" width=600 height=400> <br>
+<img src="./image/lgbm_treewise.PNG" width=600 height=400> <br>
 _0, _1, ...는 depth 깊이만큼 생성
 
 최종적으로 각 Decision Tree가 leaf node에서 뱉는 값을 split_gain에 비례해서 Depth마다 사용된 변수에 할당하면, **각 데이터 포인트가 분기된 이력 정보를 가지고 지역적 변수 중요도**를 알 수 있다.
 
 최종 모습은 아래 그림과 같다.
-<img src="./image/lgbm_featurewise.png" width=600 height=400>
+
+<img src="./image/lgbm_featurewise.PNG" width=600 height=400>
 
 ```py
 # 예제코드
