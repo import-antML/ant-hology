@@ -224,7 +224,84 @@ _0, _1, ...는 depth 깊이만큼 생성
 
 ```py
 # 예제코드
+import numpy as np  # 1.14.5
+import pandas as pd  # 0.25.1
+from lightgbm import LGBMRegressor  # 3.0.0
+from sklearn.datasets import load_boston  # 0.19.1
 
+lgbm = LGBMRegressor(max_depth=10)
+boston = load_boston()
+df = pd.DataFrame(data=boston.data, columns=boston.feature_names)
+df['target'] = boston.target
+
+lgbm.fit(df.drop(columns="target"), df[["target"]])
+
+# 모든 weak learner를 돌면서 얻는 정보를 쌓을 데이터프레임 초기화
+df_weaklearner_wise_details = pd.DataFrame()
+# LGBM의 정보를 dictionary로 저장
+dict_tree_info = lgbm.booster_.dump_model()['tree_info']
+# 한 데이터포인트의 독립변수 세트
+lst_num_input_var = df.drop(columns="target").iloc[0] # "한 데이터포인트의 독립변수 세트"
+# 데이터 프레임에 독립변수에 대한 정보 저장
+df_features = pd.DataFrame({"feature": lgbm.booster_.dump_model()['feature_names'],
+                            "feature_value": lst_num_input_var,
+                            "feature_idx": [_ for _ in range(len(lst_num_input_var))]})
+
+# 모든 weak learner를 돌면서 분기정보와 독립변수를 결합
+for _weak_learner_idx in range(lgbm.booster_.num_trees()):
+    # 현재의 weak learner 구조를 dictonary로 저장
+    dict_current_weak_learner = dict_tree_info[_weak_learner_idx]['tree_structure']
+    # 현재의 weak learner 구조로부터 독립변수들의 영향을 저장할 데이터프레임 초기화
+    df_current_weak_learner = pd.DataFrame()
+
+    # 현재의 weak learner 구조에서 LGBM의 max_depth만큼 반복하며, 각 depth에서의 독립변수들의 영향을 저장
+    for _depth in range(lgbm.max_depth):
+        # 현재 depth에서 분기에 사용한 독립변수의 index 추출
+        feature_idx = dict_current_weak_learner['split_feature']
+        # 해당 독립변수의 임계값 추출
+        threshold = dict_current_weak_learner['threshold']
+
+        # 현재의 weak learner 구조에서 (split gain, feature, feature_value, threshold)를 저장
+        df_current_weak_learner.loc[:, f"split_gain_{_depth}"] = [dict_current_weak_learner["split_gain"]]
+        df_current_weak_learner.loc[:, f"feature_{_depth}"] = df_features.query("feature_idx == @feature_idx")["feature"].values
+        df_current_weak_learner.loc[:, f"feature_value_{_depth}"] = df_features.query("feature_idx == @feature_idx")["feature_value"].values
+        df_current_weak_learner.loc[:, f"threshold_{_depth}"] = [threshold]
+
+        # 현재 depth에서 분기에 사용한 독립변수 값이 임계값보다 작거나 같으면
+        if lst_num_input_var[feature_idx] <= threshold:
+            # 현재의 weak learner 구조를 왼쪽 노드의 weak learner 구조로 변경
+            dict_current_weak_learner = dict_current_weak_learner["left_child"]
+
+        # 현재 depth에서 분기에 사용한 독립변수 값이 임계값보다 크면
+        else:
+            # 현재의 weak learner 구조를 오른쪽 노드의 weak learner 구조로 변경
+            dict_current_weak_learner = dict_current_weak_learner["right_child"]
+        
+        # 현재의 weak learner 구조에서 internal_value가 존재하면 (= leaf node에 도달하지 못함) internal_value와 internal_count 저장
+        try:
+            df_current_weak_learner.loc[:, f"internal_value_{_depth}"] = [dict_current_weak_learner["internal_value"]]
+            df_current_weak_learner.loc[:, f"internal_count_{_depth}"] = [dict_current_weak_learner["internal_count"]]
+            # 그렇지 않으면 (= leaf node에 도달함), leaf_value와 leaf_count를 저장하고 현재의 weak learner 구조 종료
+        except:
+            df_current_weak_learner.loc[:, "leaf_value"] = [dict_current_weak_learner["leaf_value"]]
+            df_current_weak_learner.loc[:, "leaf_count"] = [dict_current_weak_learner["leaf_count"]]
+            break
+    df_weaklearner_wise_details = df_weaklearner_wise_details.append(df_current_weak_learner, sort=False)
+
+# df_weaklearner_wise_details에서 각 독립변수에 해당하는 split_gain과 leaf_value만 추출
+df_weaklearner_wise_gain =\
+df_weaklearner_wise_details[[_col + str(_depth) for _depth in range(lgbm.max_depth) for _col in ["feature_", "split_gain_"]] + ["leaf_value"]].copy()
+# 각 행별로 feature들이 갖는 split_gain의 합을 계산
+df_weaklearner_wise_gain.loc[:, "split_gain_sum"] = df_weaklearner_wise_gain[["split_gain_" + str(_depth) for _depth in range(lgbm.max_depth)]].sum(axis=1).copy()
+# 각 행에서 feature_depth는 해당 독립변수의 split_gain이 split_gain_sum에서 차지하는 비중만큼 leaf_value를 나눠 가짐
+for _depth in range(lgbm.max_depth):
+    df_weaklearner_wise_gain.loc[:, f"leaf_value_{_depth}"] = (df_weaklearner_wise_gain["leaf_value"] * df_weaklearner_wise_gain[f"split_gain_{_depth}"] / df_weaklearner_wise_gain["split_gain_sum"]).copy()
+    # 독립변수별로 갖는 leaf_value를 합함으로써 leaf_value에 대한 변수별 영향도를 계산
+df_features.loc[:, "leaf_sum"] = [np.sum([df_weaklearner_wise_gain.query(f"feature_{_depth} == '{_col}'")[f"leaf_value_{_depth}"].sum() for _depth in range(lgbm.max_depth)]) for _col in df_features.feature]
+
+df_features["leaf_sum"].sum()  # 24.5613766
+lgbm.predict([lst_num_input_var])  # 24.5613766
+# 해당 독립변수 세트의 경우엔 24.5613766의 값을 구성하는데 RM의 영향이 가장 컸음을 알 수 있음
 
 ```
 
