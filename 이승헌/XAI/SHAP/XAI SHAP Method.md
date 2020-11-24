@@ -4,6 +4,9 @@
 ### [Reference](#3.-Reference)
 
 # 1. SHAP (SHapley Additive exPlanations)
+
+![SHAP](https://raw.githubusercontent.com/slundberg/shap/master/docs/artwork/shap_header.png)
+
 SHAP(SHapley Additive exPlanations)는 섀플리 값(Shapley value)과 피처 간 독립성을 핵심 아이디어로 사용하는 XAI 기법이다.
 
 ## 1.1. Shapley values
@@ -76,7 +79,16 @@ SHAP는 모델의 Output을 각 피처의 기여도로 분해한다.
     * ### Feature Importance
         * Shapley value의 절대값 평균
         * 호르몬약 복용기간이 가장 중요한 피처로 확인
-        * Permutation feature importance는 모델의 성능 감소 기반, SHAP는 피처의 기여도 기반
+        * SHAP feature importance
+                : 피처의 기여도 기반, 계산량이 많아 속도가 느림,
+                피처 간 의존성을 고려함,
+                음의 영향력을 계산함
+            
+            Permutation feature importance
+                : 모델 성능 감소 기반, 계산 속도가 빠름,
+                피처 간 의존성을 고려하지 않음,
+                음의 영향력은 계산하지 않음
+
         ![featureimportance](https://christophm.github.io/interpretable-ml-book/images/shap-importance.png)
 
     * ### Summary Plot
@@ -92,6 +104,14 @@ SHAP는 모델의 Output을 각 피처의 기여도로 분해한다.
         * dependence plot에 특정 변수의 상호작용 결합
 
             ![interactionvalues](https://christophm.github.io/interpretable-ml-book/images/shap-dependence-interaction.png)
+
+* ## Summary
+    * SHAP는 섀플리 값을 사용해 피처가 모델에 미치는 영향을 분석하는 XAI기법이다.
+    * SHAP는 피처 간 의존성을 고려한다.
+    * SHAP는 음의 영향력을 고려한다.
+    * SHAP는 하나 이상의 중요한 피처를 시각화할 수 있다.
+    * SHAP는 계산량이 많아 속도가 느리다.
+    * SHAP는 기존 데이터에 의존적이므로 아웃라이어에 취약하다.
 
 # 2. Example
 ## 2.1. Predict house prices in suburbs of Boston
