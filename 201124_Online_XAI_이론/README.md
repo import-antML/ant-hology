@@ -1,12 +1,13 @@
 ### [import ant] 201124 online 학습활동 XAI
 
 1. 학습 내용
-   1. SHAP / LIME 이론 부분 간단한 요약 정리 준비
-   2. SHAP : 이승헌 선임
+   1. 코로나19 이슈로 인해 부득이하게 오프라인으로 진행.
+   2. SHAP / LIME 이론 부분 간단한 요약 정리 준비
+   3. SHAP : 이승헌 선임
       1. https://github.com/import-antML/ant-hology/blob/master/%EC%9D%B4%EC%8A%B9%ED%97%8C/XAI/SHAP/XAI%20SHAP%20Method.md
-   3. LIME : 권순규 사원
+   4. LIME : 권순규 사원
       1. https://github.com/import-antML/ant-hology/blob/master/ksk/lime/README.md
-   4. 참조
+   5. 참조
       1. Book : XAI 설명 가능한 인공지능 인공지능을 해부하다
       2. Definition of Shapley value : https://en.wikipedia.org/wiki/Shapley_value#Formal_definition
       3. Interpretable Machine Learning : https://christophm.github.io/interpretable-ml-book/
