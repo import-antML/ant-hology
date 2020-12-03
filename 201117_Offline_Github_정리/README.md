@@ -1,7 +1,7 @@
 ### [import ant] 201117 Offline 학습활동
 
 1. Git, Github 치트시트 기반 사용 방법 설명 - 김주현 사원
-   1. https://github.com/import-antML/ant-hology/blob/master/201117_Offline_Github/Git%2C%20Github%20cheat%20sheet.md
+   1. https://github.com/import-antML/ant-hology/blob/master/201117_Offline_Github_정리/Git%2C%20Github%20cheat%20sheet.md
 2. 지난 차시 온라인 학습활동 중 해결하지 못한 이슈 해결 및 질의응답 진행
    1. Github 와 Wire code(Bitbucket)의 기능적 차이
    2. Git과 Github의 기능 구분하기
