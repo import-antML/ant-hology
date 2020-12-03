@@ -21,5 +21,4 @@
          6. [https://dreamgonfly.github.io/blog/lime/#%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%9E%91%EB%8F%99%ED%95%98%EB%82%98%EC%9A%94](https://dreamgonfly.github.io/blog/lime/#어떻게-작동하나요)
          7. https://github.com/marcotcr/lime/issues/113
 2. 다음차시
-   1. 각자 원하는 데이터를 이용하여 모델링을 진행하고 (예제데이터 권장) SHAP과 LIME 예제를 적용하여 다양한 plot 그리고 결과 해석하기
-   2. 12/3일(목) 온라인 진행
+   1. (edit)
