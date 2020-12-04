@@ -21,4 +21,6 @@
          6. [https://dreamgonfly.github.io/blog/lime/#%EC%96%B4%EB%96%BB%EA%B2%8C-%EC%9E%91%EB%8F%99%ED%95%98%EB%82%98%EC%9A%94](https://dreamgonfly.github.io/blog/lime/#어떻게-작동하나요)
          7. https://github.com/marcotcr/lime/issues/113
 2. 다음차시
-   1. (edit)
+   1. 2020년 일정 종료
+   2. 금일 진행한 실습내용 공유하기(다음 차시 전까지 실습 완료하여 커밋)
+   3. 다음 차시 일정은 2021년에 유선상으로 정함.
